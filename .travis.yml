@@ -3,15 +3,23 @@ language: java
 cache:
   directories:
   - "$HOME/.cache"
+  - "$HOME/.m2"
 services:
 - docker
+before_script:
+- sleep 15
+- "cp .travis.settings.xml $HOME/.m2/settings.xml"
+script:
+- "mvn clean install --console=rich"
+before_deploy:
+- chmod ugo+x deploy_travisci.sh
 deploy:
   provider: script
-  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn clean install site"
+  script: 
+  - "sh ./deploy_travisci.sh"
   skip_cleanup: true
   on:
     tags: false
-    
 notifications:
   email:
     recipients:
