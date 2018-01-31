@@ -24,7 +24,7 @@
 
 # Builds immutable Docker Image, deploying the JAR, above.
 cd -
-docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
+docker login -u="abhiesa" -p="${DOCKER_PASSWORD}"
 
 set -ex
 
