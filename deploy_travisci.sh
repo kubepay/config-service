@@ -29,10 +29,11 @@ docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
 set -ex
 
 sleep 120 # wait for automated Docker Hub build to finish...
-IMAGE="garystafford/microservice-docker-demo-widget"
-docker build -t ${IMAGE}:fluentd .
-docker push ${IMAGE}:fluentd
 
-IMAGE_TAG="0.2.${TRAVIS_BUILD_NUMBER}"
-docker tag ${IMAGE}:fluentd ${IMAGE}:${IMAGE_TAG}
+IMAGE="abhiesa/config-service"
+IMAGE_TAG="2.0.${TRAVIS_BUILD_NUMBER}"
+
+docker build --file=Dockerfile --tag=${IMAGE}:${IMAGE_TAG} --rm=true .
 docker push ${IMAGE}:${IMAGE_TAG}
+docker tag ${IMAGE}:${IMAGE_TAG} ${IMAGE}:latest
+docker push ${IMAGE}:latest
